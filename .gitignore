@@ -1,20 +1,33 @@
+
 # Laravel
-/vendor/
-.env
-/storage/
-.idea/
-.phpunit.result.cache
+backend/.env
+backend/vendor/
+backend/node_modules/
+backend/storage/*.key
+backend/.phpunit.result.cache
 
-# Angular & Ionic
-/node_modules/
-/dist/
-/www/
-/out-tsc/
-.tmp/
-coverage/
+# Angular
+web/node_modules/
+web/dist/
+web/.angular/
 
-# IDEs y sistema
+# Ionic
+mobile/node_modules/
+mobile/www/
+mobile/platforms/
+mobile/plugins/
+
+# IDEs
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistema operativo
 .DS_Store
 Thumbs.db
 
+# Logs
+*.log
+npm-debug.log*
