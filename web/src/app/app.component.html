@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <h1>⚽ {{ title }}</h1>
+    </div>
+    <div class="nav-links">
+      <a routerLink="/teams" routerLinkActive="active">
+        <span class="icon">👥</span>
+        Equipos
+      </a>
+      <a routerLink="/standings" routerLinkActive="active">
+        <span class="icon">🏆</span>
+        Clasificación
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  <p>Mini Liga Express | Hecho por Francisco Murcia</p>
+</footer>

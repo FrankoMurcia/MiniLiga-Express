@@ -1,0 +1,110 @@
+<div class="container">
+  <h2>Gestión de Partidos</h2>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="loading && !selectedMatch" class="loading">Cargando...</div>
+
+  <!-- Próximos Partidos -->
+  <div class="section">
+    <h3>📅 Próximos Partidos ({{ upcomingMatches.length }})</h3>
+    
+    <div *ngIf="upcomingMatches.length === 0" class="empty">
+      No hay partidos pendientes
+    </div>
+
+    <div class="matches-grid">
+      <div *ngFor="let match of upcomingMatches" class="match-card upcoming">
+        <div class="match-date">{{ formatDate(match.match_date) }}</div>
+        <div class="match-teams">
+          <div class="team">
+            <span class="team-name">{{ match.homeTeam?.name }}</span>
+            <span class="vs">vs</span>
+            <span class="team-name">{{ match.awayTeam?.name }}</span>
+          </div>
+        </div>
+        <button class="btn-register" (click)="openModal(match)">
+          Registrar Resultado
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Partidos Jugados -->
+  <div class="section">
+    <h3>✅ Partidos Finalizados ({{ playedMatches.length }})</h3>
+    
+    <div *ngIf="playedMatches.length === 0" class="empty">
+      No hay partidos finalizados
+    </div>
+
+    <div class="matches-grid">
+      <div *ngFor="let match of playedMatches" class="match-card played">
+        <div class="match-date">{{ formatDate(match.match_date) }}</div>
+        <div class="match-result">
+          <div class="team-result">
+            <span class="team-name">{{ match.homeTeam?.name }}</span>
+            <span class="score">{{ match.home_score }}</span>
+          </div>
+          <span class="separator">-</span>
+          <div class="team-result">
+            <span class="score">{{ match.away_score }}</span>
+            <span class="team-name">{{ match.awayTeam?.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para registrar resultado -->
+<div *ngIf="selectedMatch" class="modal-overlay" (click)="closeModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Registrar Resultado</h3>
+      <button class="close-btn" (click)="closeModal()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="match-info">
+        <p>{{ formatDate(selectedMatch.match_date) }}</p>
+      </div>
+
+      <div class="score-input">
+        <div class="team-score">
+          <label>{{ selectedMatch.homeTeam?.name }}</label>
+          <input 
+            type="number" 
+            [(ngModel)]="homeScore" 
+            min="0" 
+            max="99"
+          />
+        </div>
+
+        <span class="vs-large">VS</span>
+
+        <div class="team-score">
+          <label>{{ selectedMatch.awayTeam?.name }}</label>
+          <input 
+            type="number" 
+            [(ngModel)]="awayScore" 
+            min="0" 
+            max="99"
+          />
+        </div>
+      </div>
+
+      <div *ngIf="error" class="error">{{ error }}</div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
+        <button 
+          class="btn-submit" 
+          (click)="submitResult()" 
+          [disabled]="loading"
+        >
+          {{ loading ? 'Guardando...' : 'Guardar Resultado' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

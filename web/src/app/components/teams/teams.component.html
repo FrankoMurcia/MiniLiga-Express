@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>⚽ Gestión de Equipos</h2>
+  
+  <div class="form-card">
+    <h3>Agregar Nuevo Equipo</h3>
+    <div class="form-group">
+      <input 
+        type="text" 
+        [(ngModel)]="newTeamName" 
+        placeholder="Nombre del equipo"
+        (keyup.enter)="addTeam()"
+        [disabled]="loading"
+      />
+      <button (click)="addTeam()" [disabled]="loading || !newTeamName.trim()">
+        {{ loading ? '⏳ Guardando...' : '✅ Agregar' }}
+      </button>
+    </div>
+
+    <div class="alert alert-error" *ngIf="error">
+      ❌ {{ error }}
+    </div>
+
+    <div class="alert alert-success" *ngIf="success">
+      ✅ {{ success }}
+    </div>
+  </div>
+
+  <div class="teams-card">
+    <div class="card-header">
+      <h3>Equipos Registrados</h3>
+      <span class="badge">{{ teams.length }}</span>
+    </div>
+    
+    <div *ngIf="loading && teams.length === 0" class="loading">
+      <div class="spinner"></div>
+      Cargando equipos...
+    </div>
+
+    <div class="teams-grid" *ngIf="!loading || teams.length > 0">
+      <div class="team-item" *ngFor="let team of teams; let i = index">
+        <div class="team-number">{{ i + 1 }}</div>
+        <div class="team-name">{{ team.name }}</div>
+      </div>
+    </div>
+
+    <p class="empty-state" *ngIf="teams.length === 0 && !loading">
+      📋 No hay equipos registrados aún. ¡Crea el primero!
+    </p>
+  </div>
+</div>

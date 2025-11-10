@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>⚽ Próximos Partidos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="loadMatches()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="loading" style="padding: 2rem; text-align: center;">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <ion-list *ngIf="!loading && matches.length > 0">
+    <ion-item *ngFor="let match of matches" (click)="goToResult(match.id)" button>
+      <ion-label>
+        <h2><strong>{{ match.home_team_id }}</strong> vs <strong>{{ match.away_team_id }}</strong></h2>
+        <p>{{ match.date | date:'short' }}</p>
+      </ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="!loading && matches.length === 0" style="padding: 2rem; text-align: center; color: #999;">
+    <ion-icon name="football-outline" style="font-size: 64px;"></ion-icon>
+    <p>No hay partidos pendientes</p>
+  </div>
+</ion-content>

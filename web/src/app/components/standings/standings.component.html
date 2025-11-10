@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="header">
+    <h2>🏆 Clasificación</h2>
+    <button class="refresh-btn" (click)="loadStandings()" [disabled]="loading">
+      <span *ngIf="!loading">🔄</span>
+      <span *ngIf="loading" class="spin">⏳</span>
+      Actualizar
+    </button>
+  </div>
+
+  <div class="alert alert-error" *ngIf="error">
+    ❌ {{ error }}
+  </div>
+
+  <div *ngIf="loading && standings.length === 0" class="loading">
+    <div class="spinner"></div>
+    Cargando clasificación...
+  </div>
+
+  <div class="table-card" *ngIf="!loading || standings.length > 0">
+    <div class="table-responsive">
+      <table *ngIf="standings.length > 0">
+        <thead>
+          <tr>
+            <th class="pos-col">Pos</th>
+            <th class="team-col">Equipo</th>
+            <th>PJ</th>
+            <th>Pts</th>
+            <th>GF</th>
+            <th>GC</th>
+            <th>DG</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of standings; let i = index" 
+              [class.podium]="i < 3">
+            <td class="pos-col">
+              <span class="position">{{ i + 1 }}</span>
+              <span class="medal">{{ getMedalEmoji(i) }}</span>
+            </td>
+            <td class="team-col">{{ team.name }}</td>
+            <td>{{ team.played || 0 }}</td>
+            <td class="points">{{ team.points || 0 }}</td>
+            <td>{{ team.goals_for || 0 }}</td>
+            <td>{{ team.goals_against || 0 }}</td>
+            <td [class.positive]="(team.goal_diff || 0) > 0"
+                [class.negative]="(team.goal_diff || 0) < 0">
+              <td [class.positive]="(team?.goal_diff || 0) > 0"
+                  [class.negative]="(team?.goal_diff || 0) < 0">
+                {{ (team?.goal_diff || 0) > 0 ? '+' : '' }}{{ team?.goal_diff || 0 }}
+              </td>
+            <!--</td>-->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="empty-state" *ngIf="standings.length === 0 && !loading">
+      📊 No hay datos de clasificación aún.<br>
+      Registra algunos resultados para ver la tabla.
+    </p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <strong>PJ:</strong> Partidos Jugados
+    </div>
+    <div class="legend-item">
+      <strong>Pts:</strong> Puntos
+    </div>
+    <div class="legend-item">
+      <strong>GF:</strong> Goles a Favor
+    </div>
+    <div class="legend-item">
+      <strong>GC:</strong> Goles en Contra
+    </div>
+    <div class="legend-item">
+      <strong>DG:</strong> Diferencia de Goles
+    </div>
+  </div>
+</div>

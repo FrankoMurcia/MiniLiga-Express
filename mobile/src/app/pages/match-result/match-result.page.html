@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/matches"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registrar Resultado</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Partido #{{ matchId }}</ion-card-subtitle>
+      <ion-card-title>Registrar Marcador</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Goles Equipo Local</ion-label>
+        <ion-input type="number" [(ngModel)]="homeScore" min="0" placeholder="0"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Goles Equipo Visitante</ion-label>
+        <ion-input type="number" [(ngModel)]="awayScore" min="0" placeholder="0"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" (click)="submitResult()" style="margin-top: 1.5rem;">
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        Guardar Resultado
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
